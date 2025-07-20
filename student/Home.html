@@ -1,4 +1,4 @@
-<!doctype php>
+<!doctype html>
 <html>
 <head>
   <meta charset="UTF-8">
@@ -19,493 +19,187 @@
     }
     .icon-wrapper.active {
       background-color: white;
-      border-radius: 0.5rem; /* rounded-lg */
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       transform: scale(1.1);
     }
   </style>
 </head>
 <body class="bg-white min-h-screen flex flex-col">
-  <!-- Mobile header with menu button -->
-  <header class="bg-[#15294B] text-white flex items-center justify-between px-4 py-3 md:hidden">
-    <button aria-label="Open sidebar" class="text-white focus:outline-none" id="menu-btn">
-      <img alt="Menu icon three horizontal lines" class="w-6 h-6" height="24" src="images/Profile.png" width="24"/>
-    </button>
-    <div class="flex items-center space-x-3">
-      <img alt="Profile icon round photo" class="w-10 h-10 rounded-full object-cover border border-white" height="40" id="mobile-profile-icon" src="images/Profile.png" width="40"/>
+
+  <main class="flex-1 flex flex-col overflow-auto">
+    <!-- Header -->
+    <header class="w-full bg-[#07214A] px-6 py-4 shadow-md border-b-4 border-[#F0BB3F]">
+      <div class="flex items-center space-x-4">
+        <img src="images/Logo.svg" alt="Logo" class="w-12 h-12 object-contain" />
+        <h1 class="text-white text-xl sm:text-2xl font-bold">
+          Immaculada Conception College
+        </h1>
+      </div>
+    </header>
+
+    <!-- Dashboard Title -->
+    <section id="dashboard-title" class="px-4 md:px-10 pt-10 mt-[-10px]"></section>
+
+    <!-- Department Buttons -->
+    <div id="department-buttons" class="grid grid-cols-1 sm:grid-cols-2 gap-6 px-4 sm:px-6 md:px-10 mt-10">
+      <div class="flex flex-col gap-4">
+        <button onclick="showForm('Registrar')" class="bg-[#071c42] text-white py-10 px-6 rounded-lg text-lg font-semibold w-full">REGISTRAR</button>
+        <button onclick="showForm('Cashier')" class="bg-[#071c42] text-white py-10 px-6 rounded-lg text-lg font-semibold w-full">CASHIER</button>
+      </div>
+      <div class="flex flex-col gap-4">
+        <button onclick="showForm('Admission')" class="bg-[#071c42] text-white py-10 px-6 rounded-lg text-lg font-semibold w-full">ADMISSION</button>
+        <button onclick="showForm('MIS')" class="bg-[#071c42] text-white py-10 px-6 rounded-lg text-lg font-semibold w-full">MIS</button>
+      </div>
     </div>
-  </header>
-  <div class="flex flex-1 overflow-hidden">
-    <!-- Sidebar -->
-    <aside class="fixed inset-y-0 left-0 z-30 w-64 bg-[#071c42] border-r-4 border-[#f2bc39] py-6 space-y-4 md:space-y-4 text-white text-xs transform -translate-x-full md:translate-x-0 md:static md:flex md:flex-col md:items-center md:w-20 md:py-6 transition-transform duration-300 ease-in-out" id="sidebar">
-      <img alt="Official seal logo with blue and gold colors" class="w-12 h-12 mx-auto md:mx-0 mt-[-10px] mb-[12px]" height="48" src="images/Logo.png" width="48"/>
-      <nav class="flex flex-col items-center space-y-4 md:space-y-4 text-white text-xs">
-        <a class="flex flex-col items-center space-y-1 md:space-y-1 icon" href="Home.html" data-icon="home">
-          <div class="icon-wrapper flex items-center justify-center w-8 h-8">
-            <img
-              src="images/Book Queue.png"
-              data-white="images/Book Queue.png"
-              data-blue="images/Book Queue Blue.png"
-              class="w-5 h-5"
-            />
+
+    <!-- Department Form -->
+    <div id="department-form" class="hidden flex justify-center items-center mt-16">
+      <div class="bg-[#ebf0f2] rounded-lg w-[1000px] p-8 space-y-6 shadow-lg">
+        <p class="text-base text-[#071c42] text-center">
+          <strong>Disclaimer:</strong> By using the ICC Online Queue Registration, you agree to provide accurate information...
+        </p>
+        <div class="grid grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <div id="selected-department" readonly class="w-full px-4 py-3 border border-gray-300 rounded-md text-gray-700 bg-gray-100 cursor-not-allowed"></div>
+            <input type="text" placeholder="Full Name" class="w-full px-4 py-3 border border-gray-300 rounded-md" />
           </div>
-          <span class="icon-label text-[10px] px-[8px] text-center text-white">Queue Status</span>
-        </a>
-        <a class="flex flex-col items-center space-y-1 md:space-y-1 icon" href="QueueStatus.html" data-icon="Queue">
-          <div class="icon-wrapper flex items-center justify-center w-8 h-8">
-            <img
-              src="images/Queue Status.png"
-              data-white="images/Queue Status.png"
-              data-blue="images/Queue Status Blue.png"
-              class="w-5 h-5"
-            />
+          <div class="space-y-4">
+            <select id="transaction-type" class="w-full px py-[15px] border border-gray-300 rounded-md">
+              <option value="">Select Transaction Type</option>
+              <option value="Enrollment">Enrollment</option>
+              <option value="Grades">Grades</option>
+              <option value="Billing">Billing</option>
+            </select>
+            <input type="text" placeholder="Student ID / LRN" class="w-full px-4 py-3 border border-gray-300 rounded-md" />
           </div>
-          <span class="icon-label text-[10px] px-5 text-center text-white">Book Queue Slot</span>
-        </a>
-        <a class="flex flex-col items-center space-y-1 md:space-y-1 icon" href="MyBooking.html" data-icon="counter">
-          <div class="icon-wrapper flex items-center justify-center w-8 h-8">
-            <img
-              src="images/My Booking.png"
-              data-white="images/My Booking.png"
-              data-blue="images/My Bookings Blue.png"
-              class="w-5 h-5"
-            />
-          </div>
-          <span class="icon-label text-[10px] px-5 text-center text-white">My Bookings</span>
-        </a>
-      </nav>
-    </aside>
-    <!-- Overlay for mobile sidebar -->
-    <div class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden md:hidden" id="overlay"></div>
-    <!-- Main content -->
-    <main class="flex-1 flex flex-col overflow-auto">
-      <!-- Header for desktop -->
-      <header class="hidden md:flex justify-between items-center px-10 py-4 border-b border-gray-300">
-        <div></div>
-        <div class="relative flex items-center gap-4">
-  <!-- Notification Icon -->
-  <button aria-label="Notifications" class="relative">
-    <img src="images/Notification.png" alt="Notifications" class="w-10 h-10 object-contain"/>
-  </button>
-          <button id="profileDropdownBtn" class="flex items-center space-x-3 text-[#15294B] text-sm font-normal focus:outline-none">
-            <img alt="Profile icon round photo" class="w-10 h-10 rounded-full object-cover cursor-pointer" height="40" src="images/Profile.png" width="40"/>
+        </div>
+        <div class="flex justify-center items-center pt-4">
+          <button onclick="submitForm()" class="bg-[#071c42] text-white px-[120px] py-3 rounded-lg text-sm font-semibold hover:bg-[#00284a] transition duration-300">
+            Submit
           </button>
-          <div id="profileDropdown" class="absolute right-0 mt-[180px] w-52 bg-[#ebf0f2] rounded-lg shadow-lg border border-gray-200 hidden z-50 transition-all duration-300">
-            <ul class="py-2 text-sm text-[#1f365f]">
-              <li>
-                <a href="#" id="viewProfileBtn" class="dropdown-item flex items-center gap-3 px-4 py-2 hover:bg-white w-[190px] rounded-lg ml-[8px]">
-                  <img src="images/Profile.png" alt="View Profile" class="w-5 h-5" />
-                  View Profile
-                </a>
-              </li>
-              <li>
-                <a href="#" class="dropdown-item flex items-center gap-3 px-4 py-2 hover:bg-white transition-colors duration-200 w-[190px] rounded-lg ml-[8px]">
-                  <img src="images/Change Password.png" alt="Change Password" class="w-5 h-5" />
-                  Change Password
-                </a>
-              </li>
-              <li>
-                <a href="../backend/logout.php" class="dropdown-item flex items-center gap-3 px-4 py-2 transition-all duration-200 hover:bg-white hover:text-red-600 text-[#1f365f] w-[190px] rounded-lg ml-[8px]">
-                  <img src="images/Logout.png" alt="Logout" class="w-5 h-5" />
-                  Logout
-                </a>
-              </li>
-            </ul>
-          </div>
-          <!-- View Profile Modal -->
-          <div id="viewProfileModal" class="absolute right-10 mt-2 z-50 hidden">
-            <div class="bg-[#ebf0f2] rounded-lg p-6 w-80 relative shadow-lg border border-[#b2b2b2]">
-              <!-- Upload Photo -->
-              <div class="flex flex-col items-center mb-6">
-                <img src="images/Profile.png" alt="Profile" class="w-24 h-24 rounded-full object-cover border mb-4" />
-                <input type="file" id="uploadPhoto" class="text-sm text-gray-600" />
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Feedback Button + Modal (only shown on ticket) -->
+  <div id="ticket-feedback" class="hidden">
+    <!-- Feedback Floating Button -->
+    <button id="feedbackBtn" class="fixed bottom-6 left-6 z-50">
+      <img src="images/Feedback.png" alt="Feedback" class="w-14 h-14 hover:scale-105 transition-transform" />
+    </button>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden">
+      <div class="bg-white w-full max-w-2xl rounded-lg overflow-hidden shadow-lg">
+        <div class="bg-[#07214A] text-white px-6 py-4 text-xl font-bold">Feedback</div>
+        <div class="p-6 space-y-4">
+          <input type="text" placeholder="Full Name" class="w-full px-4 py-3 border border-gray-300 rounded-md" />
+          <input type="email" placeholder="Email Address" class="w-full px-4 py-3 border border-gray-300 rounded-md" />
+          <input type="text" placeholder="Department Visited" class="w-full px-4 py-3 border border-gray-300 rounded-md" />
+          <div class="flex gap-4">
+            <input type="date" class="flex-1 px-4 py-3 border border-gray-300 rounded-md" />
+            <div class="flex items-center gap-1">
+              <span class="font-semibold mr-2">Rating:</span>
+              <div id="starRating" class="flex space-x-1 cursor-pointer">
+                ${[...Array(5)].map(() => `<svg class="w-6 h-6 text-gray-300 hover:text-yellow-400 fill-current star" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.122-6.545L.488 6.91l6.561-.954L10 0l2.951 5.956 6.561.954-4.756 4.635 1.122 6.545z"/></svg>`).join('')}
               </div>
-              <!-- Personal Info -->
-              <h3 class="text-xl font-semibold text-[#15294B] mb-1">Personal Information</h3>
-              <h5 class="text-sm text-[#737373] mb-4">Update your profile information</h5>
-              <!-- Form Fields -->
-              <form id="profileForm" class="space-y-4">
-                <div>
-                  <label class="block text-sm text-[#15294B] mb-1">Full Name</label>
-                  <input type="text" class="w-full border border-[#b2b2b2] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#003968]" placeholder="Enter full name" />
-                </div>
-                <div>
-                  <label class="block text-sm text-[#15294B] mb-1">Email</label>
-                  <input type="email" class="w-full border border-[#b2b2b2] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#003968]" placeholder="Enter email" />
-                </div>
-                <div>
-                  <label class="block text-sm text-[#15294B] mb-1">Mobile Number</label>
-                  <input type="text" class="w-full border border-[#b2b2b2] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#003968]" placeholder="Enter mobile number" />
-                </div>
-                <div class="flex justify-end space-x-3 pt-4">
-                  <button type="submit" class="px-10 py-2 bg-[#071c42] text-white rounded-lg hover:bg-[#00284a] font-bold text-xs">SAVE</button> 
-                  <button type="button" id="cancelBtn" class="px-8 py-2 bg-white border border-[#a6a6a6] text-[#071c42] rounded-lg hover:bg-gray-400 font-bold text-xs">CANCEL</button>
-                </div>
-              </form>
             </div>
           </div>
-          <!-- Change Password Modal -->
-          <div id="changePasswordModal" class="absolute right-10 mt-2 z-50 hidden">
-            <div class="bg-[#ebf0f2] rounded-lg p-6 w-80 relative shadow-lg border border-gray-300">
-              <!-- Title -->
-              <h1 class="text-xl font-semibold text-[#15294B] mb-1">Change Password</h1>
-              <h5 class="text-sm text-[#737373] mb-4">Update your password</h5>
-              <!-- Form Fields -->
-              <form id="changePasswordForm" class="space-y-4">
-                <div>
-                  <label class="block text-sm text-[#15294B] mb-1">Old Password</label>
-                  <input type="password" class="w-full border border-[#b2b2b2] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#003968]" placeholder="Enter old password" />
-                </div>
-                <div>
-                  <label class="block text-sm text-[#15294B] mb-1">New Password</label>
-                  <input type="password" class="w-full border border-[#b2b2b2] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#003968]" placeholder="Enter new password" />
-                </div>
-                <div>
-                  <label class="block text-sm text-[#15294B] mb-1">Confirm Password</label>
-                  <input type="password" class="w-full border border-[#b2b2b2] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#003968]" placeholder="Confirm new password" />
-                </div>
-                <div class="flex justify-end space-x-3 pt-4">
-                  <button type="submit" class="px-10 py-2 bg-[#071c42] text-white rounded-lg hover:bg-[#00284a] font-bold text-xs">SAVE</button>
-                  <button type="button" id="cancelPasswordBtn" class="px-8 py-2 bg-white border border-[#a6a6a6] text-[#071c42] rounded-lg hover:bg-gray-400 font-bold text-xs">CANCEL</button>
-                </div>
-              </form>
-            </div>
-          </div>
-          <!-- Notification Modal -->
-<div id="notificationModal" class="fixed inset-0 z-50 flex justify-start items-start bg-black bg-opacity-30 hidden">
-  <div class="bg-[#ebf0f2] w-full max-w-sm h-full shadow-lg p-6 pt-4 relative">
-
-    <!-- Modal Header -->
-    <div class="flex justify-between items-center">
-      <h1 class="text-xl font-bold text-[#15294B]">Notification</h1>
-
-      <!-- Dropdown Toggle -->
-      <div class="relative">
-        <button id="notifDropdownToggle" class="p-1 rounded-full transition h-8 w-8 ">
-          <!-- Replace with icon if you want -->
-          <img src="images/Dropdown.png" class="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
-        </img>
-        </button>
-
-        <!-- Dropdown Menu -->
-        <div id="notifDropdownMenu" class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg hidden">
-          <ul class="py-1 text-sm text-gray-700">
-            <li>
-              <button class="w-full text-left px-4 py-2 hover:bg-gray-100">Mark all as read</button>
-            </li>
-            <li>
-              <button onclick="closeNotificationModal()" class="w-full text-left px-4 py-2 hover:bg-gray-100">Close</button>
-            </li>
-          </ul>
+          <textarea rows="4" placeholder="Comments" class="w-full px-4 py-3 border border-gray-300 rounded-md resize-none"></textarea>
+        </div>
+        <div class="flex justify-end px-6 py-4">
+          <button id="submitFeedbackBtn" class="bg-[#07214A] text-white px-6 py-2 rounded-md hover:bg-[#061835] transition">Submit Feedback</button>
         </div>
       </div>
     </div>
-
-    <!-- Divider -->
-    <hr class="my-4 border-gray-300">
-
-    <!-- Modal Body -->
-    <div class="flex flex-col items-center justify-center mt-10 text-center text-[#15294B]">
-      <!-- Static Icon -->
-      <img src="images/Notif.png" class="h-12 w-12 text-gray-400 mt-[200px] mb-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-    </img>
-      <h3 class="text-lg font-medium">No notification</h3>
-    </div>
-  </div>
-</div>
-        </div>
-      </header>
-      <!-- Dashboard Title -->
-<section id="dashboard-title" class="px-4 md:px-10 pt-10 mt-[-10px]">
-</section>
- 
-<!-- Department Buttons (2-column layout: left/right pairing) -->
-<div id="department-buttons" class="grid grid-cols-1 sm:grid-cols-2 gap-6 px-4 sm:px-6 md:px-10 mt-[10px] sm:mt-10 lg:mt-20">
-  <!-- Column 1 -->
-  <div class="flex flex-col gap-4">
-    <button onclick="showForm('Registrar')" class="bg-[#071c42] shadow-2xl text-white py-10 px-6  rounded-lg text-lg sm:text-xl font-semibold w-full">
-      REGISTRAR
-    </button>
-    <button onclick="showForm('Cashier')" class="bg-[#071c42] text-white py-10 px-6 rounded-lg text-lg sm:text-xl font-semibold w-full">
-      CASHIER
-    </button>
   </div>
 
-  <!-- Column 2 -->
-  <div class="flex flex-col gap-4">
-    <button onclick="showForm('Admission')" class="bg-[#071c42] text-white py-10 px-6 rounded-lg text-lg sm:text-xl font-semibold w-full">
-      ADMISSION
-    </button>
-    <button onclick="showForm('MIS')" class="bg-[#071c42] text-white py-10 px-6 rounded-lg text-lg sm:text-xl font-semibold w-full">
-      MIS
-    </button>
-  </div>
-</div>
-
-<!-- Department Form -->
-<div id="department-form" class="hidden flex justify-center items-center mt-16">
-  <div class="bg-[#ebf0f2] rounded-lg w-[1000px] p-8 space-y-6 shadow-lg">
-
-    <!-- Disclaimer -->
-    <p class="text-base text-[#071c42] text-center">
-      <strong>Disclaimer:</strong> By using the ICC Online Queue Registration, you agree to provide accurate information. Queue numbers are for personal use only. Three (3) consecutive no-shows may temporarily block online booking. You may still queue via the kiosk. Missed or skipped turns may require rebooking. All data is handled under the Data Privacy Act of 2012.
-    </p>
-
-    <!-- Two Columns -->
-    <div class="grid grid-cols-2 gap-6">
-      
-      <!-- Left Column -->
-      <div class="space-y-4">
-       <div 
-    id="selected-department" 
-    readonly
-    class="w-full px-4 py-3 border border-gray-300 rounded-md text-gray-700 bg-gray-100 cursor-not-allowed">
-  </div>
-        <input type="text" placeholder="Full Name" class="w-full px-4 py-3 border border-gray-300 rounded-md" />
-        <input type="email" id="email" placeholder="Enter Email Address" class="w-full px-4 py-3 border border-gray-300 rounded-md" />
-
-        <!-- OTP Buttons Left -->
-        <div class="flex justify-between text-xs">
-          <button class="text-[#003968] font-bold border bg-white border-[#071c42] rounded-md px-[15px] py-[7px]">Send OTP</button>
-          <p class="text-[#003968] font-extralight pt-2">Didn't get the code?
-          <button class="text-[#071c42] font-normal">Resend</button>
-          </p>
-        </div>
-      </div>
-
-      <!-- Right Column -->
-      <div class="space-y-4">
-        <select class="w-full px py-[15px] border border-gray-300 rounded-md">
-          <option value="">Select Transaction Type</option>
-          <option value="Enrollment">Enrollment</option>
-          <option value="Grades">Grades</option>
-          <option value="Billing">Billing</option>
-        </select>
-        <input type="text" placeholder="Student ID / LRN" class="w-full px-4 py-3 border border-gray-300 rounded-md" />
-        <input type="text" placeholder="OTP Number" class="w-full px-4 py-3 border border-gray-300 rounded-md" />
-
-        <!-- Verify & Countdown Right -->
-        <div class="flex justify-between text-xs">
-          <button class="text-[#003968] font-bold border bg-white border-[#071c42] rounded-md px-[15px] py-[7px]">Verify OTP</button>
-
-        </div>
-      </div>
-    </div>
-    <div class="flex justify-center items-center pt-4">
-  <button id="submitFormBtn" class="bg-[#071c42] text-white px-[120px] py-3 rounded-lg text-sm font-semibold hover:bg-[#00284a] transition duration-300">
-    Submit
-  </button>
-</div>
-  </div>
-</div>
-</section>
-    </main>
-  </div>
   <script>
-    const icons = document.querySelectorAll('.icon');
-    let activeIcon = null;
-
-    icons.forEach(icon => {
-      const wrapper = icon.querySelector('.icon-wrapper');
-      const img = icon.querySelector('img');
-      const whiteIcon = img.dataset.white;
-      const blueIcon = img.dataset.blue;
-
-      // Initialize to white
-      img.src = whiteIcon;
-
-      // When page loads, auto-highlight current page
-      const currentPath = window.location.pathname.split('/').pop();
-      const href = icon.getAttribute('href');
-      if (href === currentPath) {
-        wrapper.classList.add('active');
-        img.src = blueIcon;
-        activeIcon = icon;
-      }
-
-      icon.addEventListener('click', () => {
-        // Reset all icons
-        icons.forEach(i => {
-          const w = i.querySelector('.icon-wrapper');
-          const im = i.querySelector('img');
-          w.classList.remove('active');
-          im.src = im.dataset.white;
-        });
-
-        // Set active
-        wrapper.classList.add('active');
-        img.src = blueIcon;
-        activeIcon = icon;
-      });
-
-      // Handle hover out
-      icon.addEventListener('mouseleave', () => {
-        if (activeIcon !== icon) {
-          img.src = whiteIcon;
-        }
-      });
-    });
-
-    const profileBtn = document.getElementById('profileDropdownBtn');
-    const dropdown = document.getElementById('profileDropdown');
-
-    profileBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      dropdown.classList.toggle('hidden');
-    });
-
-    // Close dropdown on outside click
-    document.addEventListener('click', (e) => {
-      if (!dropdown.classList.contains('hidden')) {
-        dropdown.classList.add('hidden');
-      }
-    });
-
-    // Animation on click (white box background)
-    document.querySelectorAll('.dropdown-item').forEach(item => {
-      item.addEventListener('click', function () {
-        // Remove active from all
-        document.querySelectorAll('.dropdown-item').forEach(i => {
-          i.classList.remove('bg-white');
-        });
-        // Add active to clicked
-        this.classList.add('bg-white');
-      });
-    });
-
-    // Modal controls
-    const viewProfileBtn = document.getElementById('viewProfileBtn');
-    const viewProfileModal = document.getElementById('viewProfileModal');
-    const cancelBtn = document.getElementById('cancelBtn');
-
-    
-// Open modal on button click
-cancelBtn.addEventListener('click', () => {
-  viewProfileModal.classList.add('hidden');
-  dropdown.classList.remove('hidden');
-  profileBtn.removeAttribute('disabled');
-  profileBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-
-  // ✅ Clear white background from all dropdown items
-  document.querySelectorAll('.dropdown-item').forEach(i => {
-    i.classList.remove('bg-white');
-  });
-});
-const changePasswordBtn = document.querySelector('a[href="#"]:has(img[alt="Change Password"])');
-const changePasswordModal = document.getElementById('changePasswordModal');
-const cancelPasswordBtn = document.getElementById('cancelPasswordBtn');
-
-// Open Change Password Modal
-cancelPasswordBtn.addEventListener('click', () => {
-  changePasswordModal.classList.add('hidden');
-  dropdown.classList.remove('hidden');
-  profileBtn.removeAttribute('disabled');
-  profileBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-
-  // ✅ Clear white background from all dropdown items
-  document.querySelectorAll('.dropdown-item').forEach(i => {
-    i.classList.remove('bg-white');
-  });
-});
-     const notifBtn = document.querySelector('[aria-label="Notifications"]');
-  const notifModal = document.getElementById('notificationModal');
-  const notifDropdownToggle = document.getElementById('notifDropdownToggle');
-  const notifDropdownMenu = document.getElementById('notifDropdownMenu');
-
-  notifBtn.addEventListener('click', () => {
-    notifModal.classList.remove('hidden');
-  });
-
-  function closeNotificationModal() {
-    notifModal.classList.add('hidden');
-    notifDropdownMenu.classList.add('hidden');
-  }
-
-  notifDropdownToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    notifDropdownMenu.classList.toggle('hidden');
-  });
-  function showForm(department) {
-    // Show the form
-    document.getElementById('department-form').classList.remove('hidden');
-
-    // Hide dashboard title and department buttons
-    document.getElementById('dashboard-title').classList.add('hidden');
-    document.getElementById('department-buttons').classList.add('hidden');
-
-    // Show selected department in form
-    const selectedDeptEl = document.getElementById('selected-department');
-    if (selectedDeptEl) {
-      selectedDeptEl.textContent = department;
-    }
-  }
-   function showForm(department) {
+    function showForm(department) {
       document.getElementById('department-form').classList.remove('hidden');
       document.getElementById('dashboard-title').classList.add('hidden');
       document.getElementById('department-buttons').classList.add('hidden');
       document.getElementById('selected-department').textContent = department; 
     }
+
     function submitForm() {
-      let department = document.getElementById('selected-department').textContent;
-      let transactionType = document.getElementById('transaction-type').value;
-      document.getElementById('final-department').textContent = department;
-      document.getElementById('final-transaction').textContent = transactionType;
-      // Hide the form and show the result display
-      document.getElementById('department-form').classList.add('hidden');
-      document.getElementById('result-display').classList.remove('hidden');
+      const department = document.getElementById('selected-department').textContent;
+      const transaction = document.getElementById('transaction-type').value;
+      const now = new Date();
+      const formattedDateTime = now.toLocaleString('en-US', {
+        dateStyle: 'full',
+        timeStyle: 'short',
+      });
+
+      const ticketNumber = 'A' + Math.floor(100 + Math.random() * 900);
+      const queueBefore = 2;
+
+      const ticketHTML = `
+        <header class="w-full bg-[#07214A] px-6 py-4 shadow-md border-b-4 border-[#F0BB3F]">
+          <div class="flex items-center space-x-4">
+            <img src="images/Logo.svg" alt="Logo" class="w-12 h-12 object-contain" />
+            <h1 class="text-white text-xl sm:text-2xl font-bold">Immaculada Conception College</h1>
+          </div>
+        </header>
+        <div class="flex justify-center items-center min-h-[calc(100vh-100px)] px-4 py-10">
+          <div class="bg-white rounded-lg shadow-xl p-8 max-w-xl w-full text-center space-y-6 border border-gray-300">
+            <img src="images/Logo.svg" alt="Logo" class="w-20 h-20 mx-auto">
+            <h2 class="text-xl font-bold text-[#07214A]">Immaculada Conception College of Soldier Hills Inc.</h2>
+            <p class="text-lg text-gray-700">Your ticket number is</p>
+            <div class="text-5xl font-extrabold text-[#F0BB3F]">${ticketNumber}</div>
+            <div class="text-md font-semibold text-gray-800">Department: <span class="text-[#07214A]">${department}</span></div>
+            <div class="text-md font-semibold text-gray-800">Transaction Type: <span class="text-[#07214A]">${transaction}</span></div>
+            <p class="text-gray-600">There are <strong>${queueBefore}</strong> queuing before you</p>
+            <div class="pt-4 border-t border-gray-300">
+              <div class="font-bold text-[#07214A]">QUEUE# GENERATED</div>
+              <div class="text-sm text-gray-500">${formattedDateTime}</div>
+            </div>
+          </div>
+        </div>
+      `;
+      document.querySelector('main').innerHTML = ticketHTML;
+      document.getElementById('ticket-feedback').classList.remove('hidden');
     }
-     viewProfileBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  viewProfileModal.classList.remove('hidden');
-  profileBtn.setAttribute('disabled', 'true');
-  profileBtn.classList.add('opacity-50', 'cursor-not-allowed');
-});
-changePasswordBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  dropdown.classList.add('hidden');
-  changePasswordModal.classList.remove('hidden');
-  profileBtn.setAttribute('disabled', 'true');
-  profileBtn.classList.add('opacity-50', 'cursor-not-allowed');
-});
-cancelBtn.addEventListener('click', () => {
-  viewProfileModal.classList.add('hidden');
-  dropdown.classList.remove('hidden');
-  profileBtn.removeAttribute('disabled');
-  profileBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-});
-cancelPasswordBtn.addEventListener('click', () => {
-  changePasswordModal.classList.add('hidden');
-  dropdown.classList.remove('hidden');
-  profileBtn.removeAttribute('disabled');
-  profileBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-});
- viewProfileBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  viewProfileModal.classList.remove('hidden');
-  profileBtn.setAttribute('disabled', 'true');
-  profileBtn.classList.add('opacity-50', 'cursor-not-allowed');
-});
-changePasswordBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  dropdown.classList.add('hidden');
-  changePasswordModal.classList.remove('hidden');
-  profileBtn.setAttribute('disabled', 'true');
-  profileBtn.classList.add('opacity-50', 'cursor-not-allowed');
-});
-cancelBtn.addEventListener('click', () => {
-  viewProfileModal.classList.add('hidden');
-  dropdown.classList.remove('hidden');
-  profileBtn.removeAttribute('disabled');
-  profileBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-});
-cancelPasswordBtn.addEventListener('click', () => {
-  changePasswordModal.classList.add('hidden');
-  dropdown.classList.remove('hidden');
-  profileBtn.removeAttribute('disabled');
-  profileBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-});
+
+    // Feedback Modal Logic
+    const feedbackBtn = document.getElementById('feedbackBtn');
+    const feedbackModal = document.getElementById('feedbackModal');
+    const submitFeedbackBtn = document.getElementById('submitFeedbackBtn');
+
+    if (feedbackBtn) {
+      feedbackBtn.addEventListener('click', () => {
+        feedbackModal.classList.remove('hidden');
+      });
+    }
+
+    if (feedbackModal) {
+      feedbackModal.addEventListener('click', (e) => {
+        if (e.target === feedbackModal) {
+          feedbackModal.classList.add('hidden');
+        }
+      });
+    }
+
+    const stars = document.querySelectorAll('#starRating .star');
+    let currentRating = 0;
+    stars.forEach((star, index) => {
+      star.addEventListener('click', () => {
+        currentRating = index + 1;
+        stars.forEach((s, i) => {
+          s.classList.toggle('text-yellow-400', i < currentRating);
+          s.classList.toggle('text-gray-300', i >= currentRating);
+        });
+      });
+    });
+
+    if (submitFeedbackBtn) {
+      submitFeedbackBtn.addEventListener('click', () => {
+        alert('Thanks for your feedback!');
+        feedbackModal.classList.add('hidden');
+      });
+    }
   </script>
 </body>
 </html>
