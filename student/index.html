@@ -1,0 +1,353 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./style.css" rel="stylesheet">
+ <title>
+   Online Queuing Management System
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: "Inter", sans-serif;
+    }
+  </style>
+ </head>
+ <body class="min-h-screen bg-[url(images/background.png)] bg-no-repeat bg-cover flex items-center justify-center p-6">
+  <div class="w-full max-w-7xl flex flex-col md:flex-row items-center md:items-stretch relative">
+   <!-- Left side text -->
+   <div class="flex-1 flex items-center justify-center md:justify-start px-6 md:px-16 py-10 md:py-0">
+    <h1 class="text-white text-[45px] ml-[-50px] font-bold leading-tight max-w-[600px] text-center md:text-left">
+     <span>
+      ONLINE QUEUING
+     </span>
+     <span class="text-[#F0BB3F]">
+      MANAGEMENT SYSTEM
+     </span>
+    </h1>
+   </div>
+   <!-- Right side login box -->
+   <div class="relative flex-1 max-w-md w-full bg-white rounded-lg shadow-lg p-6 sm:p-8 md:p-10 mx-6 md:mx-0">
+    <div class="flex flex-col items-center mb-6">
+     <img src="images/Logo.png" class="w-16 h-16 sm:w-20 sm:h-20 object-contain" height="80" src="https://storage.googleapis.com/a1aa/image/15e20014-3e42-4dae-4998-235f6425b758.jpg" width="80"/>
+    </div>
+    <h2 class="text-[#07214A] text-xl sm:text-xl font-normal mb-[-2px] text-center">
+     Welcome Back!
+    </h2>
+    <p class="text-[#07214A] text-xs sm:text-sm mb-6 text-center">
+     Please enter your details to login
+    </p>
+    <form class="space-y-4" action="../backend/login.php" method="post">
+     <input class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-md bg-[#F9F9F9] border order-[#b2b2b2] text-gray-500 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#07214A] text-xs sm:text-sm" placeholder="Enter email address" required="" type="email" name="email" id="emailInput"/>
+     <div class="flex items-center" style="gap: 7rem;">
+      <button class="px-2 py-1 text-xs sm:text-[8px] font-semibold text-[#07214A] border border-[#07214A] border-2 rounded-md hover:bg-[#07214A] hover:text-white transition disabled:opacity-50 disabled:cursor-not-allowed" id="sendOtpBtn" type="button" onclick="startCountdown()">
+       SEND OTP
+      </button>
+      <span class="text-xs sm:text-[12px] ml-[50px] text-[#07214A] font-normal whitespace-nowrap" id="countdownText" style="display: none;">
+       Resend the OTP in 00:00
+      </span>
+     </div>
+     <input class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-md bg-[#F9F9F9] border order-[#b2b2b2] text-gray-500 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#07214A] text-xs sm:text-sm" placeholder="Enter password" required="" type="password" name="password"/>
+     <div class="text-right">
+      <a onclick="openForgotModal()" class="cursor-pointer text-sm sm:text-[12px] ml-[90px] text-[#07214A] font-normal hover:underline">
+  Forgot Password?
+</a>
+      <div class="w-[370px] bg-white h-[40px]">
+     </div>
+     <input type="hidden" name="otp_verified" id="otp_verified" value="false">
+     <button class="w-full mt-4 bg-[#F0BB3F] text-white font-bold py-3 rounded-md hover:bg-[#d4a72f] transition text-sm sm:text-base" type="submit">
+      Login
+     </button>
+    </form>
+   </div>
+  </div>
+  <!-- Modal -->
+<div id="verificationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-xl w-[90%] max-w-md p-6 relative">
+    <div class="flex flex-col items-center">
+      <!-- Icon -->
+      <div class="mb-4">
+        <img src="images/OTP.png" alt="Icon" class="w-[200px] h-[200px]">
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-[#07214A] text-xl font-bold text-center mb-2">VERIFICATION CODE</h1>
+
+      <!-- Description -->
+      <p class="text-[#07214A] text-sm text-center mb-6">
+        We have sent the code verification to your email
+      </p>
+
+      <!-- Code input boxes -->
+      <div class="flex justify-center gap-3 mb-8">
+        <input type="text" maxlength="1" class="w-12 h-[65px] bg-[#ebf0f2] text-center text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#07214A]" />
+        <input type="text" maxlength="1" class="w-12 h-[65px] bg-[#ebf0f2] text-center text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#07214A]" />
+        <input type="text" maxlength="1" class="w-12 h-[65px] bg-[#ebf0f2] text-center text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#07214A]" />
+        <input type="text" maxlength="1" class="w-12 h-[65px] bg-[#ebf0f2] text-center text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#07214A]" />
+         <input type="text" maxlength="1" class="w-12 h-[65px] bg-[#ebf0f2] text-center text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#07214A]" />
+        <input type="text" maxlength="1" class="w-12 h-[65px] bg-[#ebf0f2] text-center text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#07214A]" />
+      </div>
+
+      <!-- Submit button -->
+      <button class="w-[350px] bg-[#071c42] text-white font-bold py-3 rounded-md text-sm mb-3">
+        SUBMIT
+      </button>
+
+      <!-- Cancel button -->
+     <button onclick="closeModal()" class="w-[350px] bg-white border border-[#b2b2b2] text-[#071c42] font-bold py-2 text-sm rounded-md">CANCEL</button>
+      </button>
+    </div>
+  </div>
+</div>
+<!-- Forgot Password Modal -->
+<div id="forgotPasswordModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+  <div class="bg-white rounded-2xl shadow-lg w-full max-w-md px-4 py-8 text-center relative">
+    
+    <!-- Icon -->
+    <div class="flex justify-center mb-4">
+      <img src="images/Forgot.png" alt="Forgot Icon" class="w-[200px] h-[200px]" />
+    </div>
+
+    <!-- Title -->
+    <h1 class="text-xl font-bold text-[#07214A] mb-2">FORGOT PASSWORD</h1>
+    
+    <!-- Description -->
+    <p class="text-sm text-[#07214A] mb-6">We'll send you a link to reset your password</p>
+    
+    <!-- Email Input -->
+    <input type="email" placeholder="Enter your email" id="forgotEmailInput" class="w-[350px] px-4 py-2 rounded-md border border-gray-300 mb-6 focus:outline-none focus:ring-2 focus:ring-[#07214A] text-base" />
+    
+    <!-- Send Reset Link Button -->
+    <button class="w-[350px] bg-[#071c42] text-white font-bold py-3 rounded-md text-sm mb-3" id="forgotSubmitBtn" type="button">SEND RESET LINK</button>
+    
+    <!-- Sign In Button -->
+    <button onclick="closeForgotModal()" class="w-[350px] bg-white border border-[#b2b2b2] text-[#071c42] font-bold py-2 text-sm rounded-md">SIGN IN</button>
+  </div>
+</div>
+  <script>
+   let countdown;
+    function startCountdown() {
+      const sendOtpBtn = document.getElementById("sendOtpBtn");
+      const countdownText = document.getElementById("countdownText");
+      let timeLeft = 60; // 60 seconds countdown
+
+      // Disable the button and show countdown text
+      sendOtpBtn.disabled = true;
+      countdownText.style.display = "inline";
+      updateCountdownText(timeLeft);
+
+      countdown = setInterval(() => {
+        timeLeft--;
+        if (timeLeft <= 0) {
+          clearInterval(countdown);
+          sendOtpBtn.disabled = false;
+          countdownText.style.display = "none";
+        } else {
+          updateCountdownText(timeLeft);
+        }
+      }, 1000);
+    }
+
+    function updateCountdownText(seconds) {
+      const countdownText = document.getElementById("countdownText");
+      const mins = Math.floor(seconds / 60).toString().padStart(2, "0");
+      const secs = (seconds % 60).toString().padStart(2, "0");
+      countdownText.textContent = `Resend the OTP in ${mins}:${secs}`;
+    }
+    function startCountdown() {
+  const sendOtpBtn = document.getElementById("sendOtpBtn");
+  const countdownText = document.getElementById("countdownText");
+  let timeLeft = 60;
+
+  // Show the modal
+  openModal();
+
+  // Disable the button and show countdown text
+  sendOtpBtn.disabled = true;
+  countdownText.style.display = "inline";
+  updateCountdownText(timeLeft);
+
+  countdown = setInterval(() => {
+    timeLeft--;
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+      sendOtpBtn.disabled = false;
+      countdownText.style.display = "none";
+    } else {
+      updateCountdownText(timeLeft);
+    }
+  }, 1000);
+}
+function openModal() {
+  document.getElementById('verificationModal').classList.remove('hidden');
+}
+
+function closeModal() {
+  document.getElementById('verificationModal').classList.add('hidden');
+}
+function openForgotModal() {
+  document.getElementById('forgotPasswordModal').classList.remove('hidden');
+}
+
+function closeForgotModal() {
+  document.getElementById('forgotPasswordModal').classList.add('hidden');
+}
+
+</script>
+ 
+<script>
+document.getElementById("sendOtpBtn").addEventListener("click", () => {
+  const email = document.getElementById("emailInput").value;
+  if (!email) {
+    alert("Please enter your email.");
+    return;
+  }
+
+  fetch("../backend/send_login_otp.php", {
+    method: "POST",
+    headers: {"Content-Type": "application/x-www-form-urlencoded"},
+    body: `email=${encodeURIComponent(email)}`
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === "success") {
+      openModal();
+      alert("OTP sent to your email.");
+    } else {
+      alert("Failed to send OTP.");
+    }
+  });
+});
+
+document.querySelector("#verificationModal button.bg-[#071c42]").addEventListener("click", () => {
+  const email = document.getElementById("emailInput").value;
+  const otpBoxes = document.querySelectorAll("#verificationModal input[type='text']");
+  const otp = Array.from(otpBoxes).map(input => input.value).join("");
+
+  if (otp.length !== 6) {
+    alert("Please enter the full 6-digit OTP.");
+    return;
+  }
+
+  fetch("../backend/verify_login_otp.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `email=${encodeURIComponent(email)}&otp=${encodeURIComponent(otp)}`
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === "valid") {
+      document.getElementById("otp_verified").value = "true";
+      document.querySelector("button[type='submit']").disabled = false;
+      closeModal();
+      alert("OTP verified! You can now log in.");
+    } else {
+      alert("Incorrect or expired OTP.");
+    }
+  });
+});
+
+document.getElementById("forgotSubmitBtn").addEventListener("click", () => {
+  const email = document.getElementById("forgotEmailInput").value;
+  if (!email) {
+    alert("Please enter your email.");
+    return;
+  }
+
+  fetch("../backend/forgot_password.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `email=${encodeURIComponent(email)}`
+  })
+  .then(res => res.text())
+  .then(() => {
+    alert("Reset instructions sent to your email.");
+    closeForgotModal();
+  });
+});
+
+</script>
+
+<script>
+const otpInputs = document.querySelectorAll('#verificationModal input[type="text"]');
+
+otpInputs.forEach((input, index) => {
+  input.addEventListener('input', () => {
+    if (input.value.length === 1 && index < otpInputs.length - 1) {
+      otpInputs[index + 1].focus();
+    }
+    checkOTPAndVerify();
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace' && input.value === '' && index > 0) {
+      otpInputs[index - 1].focus();
+    }
+  });
+
+  input.addEventListener('paste', (e) => {
+    const paste = e.clipboardData.getData('text').trim().slice(0, 6);
+    paste.split('').forEach((char, i) => {
+      if (otpInputs[i]) otpInputs[i].value = char;
+    });
+    e.preventDefault();
+    checkOTPAndVerify();
+  });
+});
+
+function checkOTPAndVerify() {
+  const otp = Array.from(otpInputs).map(input => input.value).join('');
+  if (otp.length !== 6) return;
+
+  const email = document.getElementById("emailInput").value;
+  fetch("../backend/verify_login_otp.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `email=${encodeURIComponent(email)}&otp=${encodeURIComponent(otp)}`
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === "valid") {
+      document.getElementById("otp_verified").value = "true";
+      document.querySelector("button[type='submit']").disabled = false;
+      closeModal();
+      alert("OTP verified! You can now log in.");
+    } else {
+      alert("Incorrect or expired OTP.");
+    }
+  });
+}
+
+document.getElementById("forgotSubmitBtn").addEventListener("click", () => {
+  const email = document.getElementById("forgotEmailInput").value;
+
+  if (!email) {
+    alert("Please enter your email.");
+    return;
+  }
+
+  fetch("../backend/forgot_password.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `email=${encodeURIComponent(email)}`
+  })
+  .then(res => res.text())
+  .then(response => {
+    if (response === "sent") {
+      alert("A password reset link has been sent to your email. Please check your inbox.");
+      closeForgotModal();
+    } else if (response === "no_user") {
+      alert("This email is not registered.");
+    } else {
+      alert("An error occurred while sending the reset link.");
+    }
+  });
+});
+
+</script>
+
+</body>
+</html>
