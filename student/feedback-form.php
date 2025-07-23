@@ -1,5 +1,11 @@
 
-
+  <!-- Feedback Button + Modal (only shown on ticket) -->
+  <div id="ticket-feedback" class="hidden">
+    <!-- Feedback Floating Button -->
+    <button id="feedbackBtn" class="fixed bottom-6 left-6 z-50">
+      <img src="images/Feedback.png" alt="Feedback" class="w-14 h-14 hover:scale-105 transition-transform" />
+    </button>
+    
         <div id="feedbackModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden">
       <div class="bg-white w-full max-w-2xl rounded-lg overflow-hidden shadow-lg">
         <div class="bg-[#07214A] text-white px-6 py-4 text-xl font-bold">Feedback</div>
