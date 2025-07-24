@@ -87,3 +87,55 @@
       });
     }
 </script>
+
+<script>
+function shouldShowModal() {
+  const now = new Date();
+  const manilaTime = new Date(
+    now.toLocaleString("en-US", { timeZone: "Asia/Manila" })
+  );
+
+  const hours = manilaTime.getHours();
+  const minutes = manilaTime.getMinutes();
+
+const totalMinutes = hours * 60 + minutes;
+
+if (totalMinutes >= 451 && totalMinutes >= 1050) {
+  // 451 = 7 * 60 + 31 (7:31 AM)
+  // 1050 = 17 * 60 + 30 (5:30 PM)
+  return true;
+}
+  // // Show modal outside blocked time
+  return false;
+}
+
+function checkModalDisplay() {
+  if (shouldShowModal()) {
+    document.getElementById("myModal").style.display = "flex";
+  } else {
+    document.getElementById("myModal").style.display = "none";
+  }
+}
+
+// Run on load
+checkModalDisplay();
+
+// Then check every minute
+setInterval(checkModalDisplay, 1000);
+
+
+</script>
+
+<script>
+  document.getElementById("showModalBtn").addEventListener("click", function () {
+  document.getElementById("receipt_modal").style.display = "flex";
+});
+
+  document.getElementById("returnBtn").addEventListener("click", function () {
+  document.getElementById("receipt_modal").style.display = "none";
+});
+
+document.getElementById("printBtn").addEventListener("click", function () {
+  window.print();
+});
+</script>

@@ -34,6 +34,9 @@ include_once "layout_head.php";
      <?php include_once "kiosk-form.php"; ?>
   </main>
 
+  <?php include_once "kiosk-alert.php"; ?>
+
+
 
 
     <!-- Feedback Modal -->
