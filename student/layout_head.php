@@ -26,3 +26,13 @@
   </style>
 </head>
 <body class="bg-white min-h-screen flex flex-col">
+    <main class="flex-1 flex flex-col overflow-auto">
+    <!-- Header -->
+    <header class="w-full bg-[#07214A] px-6 py-4 shadow-md border-b-4 border-[#F0BB3F]">
+      <div class="flex items-center space-x-4">
+        <img src="images/Logo.svg" alt="Logo" class="w-12 h-12 object-contain" />
+        <h1 class="text-white text-xl sm:text-2xl font-bold">
+          Immaculada Conception College
+        </h1>
+      </div>
+    </header>
