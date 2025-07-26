@@ -1,0 +1,64 @@
+@media print {
+  @page {
+    size: 80mm auto; /* or 58mm if your printer uses smaller paper */
+    margin: 0;
+  }
+
+  body {
+    margin: 0;
+    font-size: 12px;
+  }
+
+  /* Optional: Hide unwanted elements */
+  header, footer, nav, .no-print {
+    display: none;
+  }
+}
+
+.modal {
+  display: flex;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; 
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  color: #071c42;
+  font-weight: 600;
+}
+
+.logo-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.modal-content {
+  background: white;
+  padding: 50px;
+  border-radius: 8px;
+  width: 25%;
+  font-size: 1.2rem;
+
+}
+
+.modal .logo-modal img{
+  width: 100px;
+  height: 100px;
+}
+
+
+.modal .Header{
+  text-align: center;
+  margin-bottom: 10%;
+  font-size: 25px;
+}
+
+.modal .content{
+  display: flex;
+  text-align: center;
+}
