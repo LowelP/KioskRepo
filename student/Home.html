@@ -1,3 +1,31 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./style.css" rel="stylesheet">
+  <title>Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: "Roboto", sans-serif;
+    }
+    .text-shadow {
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .icon-wrapper {
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .icon-wrapper.active {
+      background-color: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body class="bg-white min-h-screen flex flex-col">
 
   <main class="flex-1 flex flex-col overflow-auto">
     <!-- Header -->
@@ -25,12 +53,153 @@
       </div>
     </div>
 
-    <!-- form will be here -->
+    <!-- Department Form -->
+    <div id="department-form" class="hidden flex justify-center items-center mt-16">
+      <div class="bg-[#ebf0f2] rounded-lg w-[1000px] p-8 space-y-6 shadow-lg">
+        <p class="text-base text-[#071c42] text-center p-6">
+          <strong>Disclaimer:</strong> Disclaimer: By using this kiosk, you agree to provide accurate information. Your queue numbers are for personal use only. Missed or skipped turns may require rebooking. All personal data is handled in compliance with the Data Privacy Act of 2012.
+        </p>
+        <div class="grid grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <div id="selected-department" readonly class="w-full px-4 py-3 border border-gray-300 rounded-md text-gray-700 bg-gray-100 cursor-not-allowed"></div>
+            <input type="text" placeholder="Full Name" class="w-full px-4 py-3 border border-gray-300 rounded-md" />
+          </div>
+          <div class="space-y-4">
+            <select id="transaction-type" class="w-full px py-[15px] border border-gray-300 rounded-md">
+              <option value="">Select Transaction Type</option>
+              <option value="Enrollment">Enrollment</option>
+              <option value="Grades">Grades</option>
+              <option value="Billing">Billing</option>
+            </select>
+            <input type="text" placeholder="Student ID / LRN" class="w-full px-4 py-3 border border-gray-300 rounded-md" />
+          </div>
+        </div>
+        <div class="flex justify-center items-center pt-4">
+          <button onclick="submitForm()" class="bg-[#071c42] text-white px-[120px] py-3 rounded-lg text-sm font-semibold hover:bg-[#00284a] transition duration-300">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
   </main>
 
-
+  <!-- Feedback Button + Modal (only shown on ticket) -->
+  <div id="ticket-feedback" class="hidden">
+    <!-- Feedback Floating Button -->
+    <button id="feedbackBtn" class="fixed bottom-6 left-6 z-50">
+      <img src="images/Feedback.png" alt="Feedback" class="w-14 h-14 hover:scale-105 transition-transform" />
+    </button>
 
     <!-- Feedback Modal -->
-    <!-- modal feed back will be here -->
+    <div id="feedbackModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden">
+      <div class="bg-white w-full max-w-2xl rounded-lg overflow-hidden shadow-lg">
+        <div class="bg-[#07214A] text-white px-6 py-4 text-xl font-bold">Feedback</div>
+        <div class="p-6 space-y-4">
+          <input type="text" placeholder="Full Name" class="w-full px-4 py-3 border border-gray-300 rounded-md" />
+          <input type="email" placeholder="Email Address" class="w-full px-4 py-3 border border-gray-300 rounded-md" />
+          <input type="text" placeholder="Department Visited" class="w-full px-4 py-3 border border-gray-300 rounded-md" />
+          <div class="flex gap-4">
+            <input type="date" class="flex-1 px-4 py-3 border border-gray-300 rounded-md" />
+            <div class="flex items-center gap-1">
+              <span class="font-semibold mr-2">Rating:</span>
+              <div id="starRating" class="flex space-x-1 cursor-pointer">
+                ${[...Array(5)].map(() => `<svg class="w-6 h-6 text-gray-300 hover:text-yellow-400 fill-current star" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.122-6.545L.488 6.91l6.561-.954L10 0l2.951 5.956 6.561.954-4.756 4.635 1.122 6.545z"/></svg>`).join('')}
+              </div>
+            </div>
+          </div>
+          <textarea rows="4" placeholder="Comments" class="w-full px-4 py-3 border border-gray-300 rounded-md resize-none"></textarea>
+        </div>
+        <div class="flex justify-end px-6 py-4">
+          <button id="submitFeedbackBtn" class="bg-[#07214A] text-white px-6 py-2 rounded-md hover:bg-[#061835] transition">Submit Feedback</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <script>
+    function showForm(department) {
+      document.getElementById('department-form').classList.remove('hidden');
+      document.getElementById('dashboard-title').classList.add('hidden');
+      document.getElementById('department-buttons').classList.add('hidden');
+      document.getElementById('selected-department').textContent = department; 
+    }
 
+    function submitForm() {
+      const department = document.getElementById('selected-department').textContent;
+      const transaction = document.getElementById('transaction-type').value;
+      const now = new Date();
+      const formattedDateTime = now.toLocaleString('en-US', {
+        dateStyle: 'full',
+        timeStyle: 'short',
+      });
+
+      const ticketNumber = 'A' + Math.floor(100 + Math.random() * 900);
+      const queueBefore = 2;
+
+      const ticketHTML = `
+        <header class="w-full bg-[#07214A] px-6 py-4 shadow-md border-b-4 border-[#F0BB3F]">
+          <div class="flex items-center space-x-4">
+            <img src="images/Logo.svg" alt="Logo" class="w-12 h-12 object-contain" />
+            <h1 class="text-white text-xl sm:text-2xl font-bold">Immaculada Conception College</h1>
+          </div>
+        </header>
+        <div class="flex justify-center items-center min-h-[calc(100vh-100px)] px-4 py-10">
+          <div class="bg-white rounded-lg shadow-xl p-8 max-w-xl w-full text-center space-y-6 border border-gray-300">
+            <img src="images/Logo.svg" alt="Logo" class="w-20 h-20 mx-auto">
+            <h2 class="text-xl font-bold text-[#07214A]">Immaculada Conception College of Soldier Hills Inc.</h2>
+            <p class="text-lg text-gray-700">Your ticket number is</p>
+            <div class="text-5xl font-extrabold text-[#F0BB3F]">${ticketNumber}</div>
+            <div class="text-md font-semibold text-gray-800">Department: <span class="text-[#07214A]">${department}</span></div>
+            <div class="text-md font-semibold text-gray-800">Transaction Type: <span class="text-[#07214A]">${transaction}</span></div>
+            <p class="text-gray-600">There are <strong>${queueBefore}</strong> queuing before you</p>
+            <div class="pt-4 border-t border-gray-300">
+              <div class="font-bold text-[#07214A]">QUEUE# GENERATED</div>
+              <div class="text-sm text-gray-500">${formattedDateTime}</div>
+            </div>
+          </div>
+        </div>
+      `;
+      document.querySelector('main').innerHTML = ticketHTML;
+      document.getElementById('ticket-feedback').classList.remove('hidden');
+    }
+
+    // Feedback Modal Logic
+    const feedbackBtn = document.getElementById('feedbackBtn');
+    const feedbackModal = document.getElementById('feedbackModal');
+    const submitFeedbackBtn = document.getElementById('submitFeedbackBtn');
+
+    if (feedbackBtn) {
+      feedbackBtn.addEventListener('click', () => {
+        feedbackModal.classList.remove('hidden');
+      });
+    }
+
+    if (feedbackModal) {
+      feedbackModal.addEventListener('click', (e) => {
+        if (e.target === feedbackModal) {
+          feedbackModal.classList.add('hidden');
+        }
+      });
+    }
+
+    const stars = document.querySelectorAll('#starRating .star');
+    let currentRating = 0;
+    stars.forEach((star, index) => {
+      star.addEventListener('click', () => {
+        currentRating = index + 1;
+        stars.forEach((s, i) => {
+          s.classList.toggle('text-yellow-400', i < currentRating);
+          s.classList.toggle('text-gray-300', i >= currentRating);
+        });
+      });
+    });
+
+    if (submitFeedbackBtn) {
+      submitFeedbackBtn.addEventListener('click', () => {
+        alert('Thanks for your feedback!');
+        feedbackModal.classList.add('hidden');
+      });
+    }
+  </script>
+</body>
+</html>
