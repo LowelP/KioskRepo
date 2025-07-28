@@ -1,0 +1,4 @@
+function getslots(){
+
+    const did;
+}

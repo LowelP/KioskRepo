@@ -62,3 +62,54 @@
   display: flex;
   text-align: center;
 }
+
+
+/* booking modal styling */
+
+.booking-modal {
+  display: flex;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; 
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  color: #071c42;
+  font-weight: 600;
+}
+
+.booking-logo-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.booking-modal-content {
+  background: white;
+  padding: 50px;
+  border-radius: 8px;
+  width: 25%;
+  font-size: 1.2rem;
+
+}
+
+.booking-modal .booking-logo-modal img{
+  width: 100px;
+  height: 100px;
+}
+
+
+.booking-modal .booking-header{
+  text-align: center;
+  margin-bottom: 10%;
+  font-size: 25px;
+}
+
+.booking-modal .booking-content{
+  display: flex;
+  text-align: center;
+}

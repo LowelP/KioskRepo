@@ -31,7 +31,7 @@ include_once "layout_head.php";
 <div id="department-form" class="flex justify-center items-center mt-16">
   <div class="bg-[#ebf0f2] rounded-lg w-[1000px] p-8 space-y-6 shadow-lg">
     <p class="text-base text-[#071c42] text-center">
-      <strong>Disclaimer:</strong> By using the ICC Online Queue Registration, you agree to provide accurate information...
+      <strong>Disclaimer:</strong> By using the ICC Online Queue Registration, you agree to provide accurate information.Your queue numbers are for personal use only. Missed or skipped turns may require rebooking. All personal data is handled in compliance with the Data Privacy Act of 2012.
     </p>
 
     <form aria-label="Queue registration form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'] . "?did={$did}"); ?>" method="POST">
@@ -72,7 +72,7 @@ include_once "layout_head.php";
       <!-- Submit Button -->
       <div class="flex justify-center items-center pt-4">
         <button onclick="submitForm()" class="bg-[#071c42] text-white px-[120px] py-3 rounded-lg text-sm font-semibold hover:bg-[#00284a] transition duration-300">
-          Submit
+          Print
         </button>
       </div>
     </form>

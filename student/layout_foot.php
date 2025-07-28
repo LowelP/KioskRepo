@@ -100,11 +100,11 @@ function shouldShowModal() {
 
 const totalMinutes = hours * 60 + minutes;
 
-// if (totalMinutes >= 451 && totalMinutes >= 1050) {
-//   // 451 = 7 * 60 + 31 (7:31 AM)
-//   // 1050 = 17 * 60 + 30 (5:30 PM)
-//   return true;
-// }
+//  if (totalMinutes >= 451 && totalMinutes >= 1050) {
+//    // 451 = 7 * 60 + 31 (7:31 AM)
+//    // 1050 = 17 * 60 + 30 (5:30 PM)
+//    return true;
+//  }
   // // Show modal outside blocked time
   return false;
 }
@@ -137,5 +137,43 @@ setInterval(checkModalDisplay, 1000);
 
 document.getElementById("printBtn").addEventListener("click", function () {
   window.print();
+});
+</script>
+
+
+<script>
+  // Pass PHP boolean to JS
+  const showModal = <?php echo ($show_modal ? 'true' : 'false'); ?>;
+
+  function shouldShowModal() {
+    return showModal;
+  }
+
+  function checkModalDisplay() {
+    const modal = document.getElementById("myModal");
+    if (!modal) return;
+    
+    if (shouldShowModal()) {
+      modal.style.display = "flex"; // or "block", depends on your CSS
+    } else {
+      modal.style.display = "none";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", checkModalDisplay);
+
+  
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const modal = document.getElementById("booking-modal");
+
+  // Close modal when clicking outside modal-content
+  window.addEventListener("click", function (e) {
+    if (modal && e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
 });
 </script>
