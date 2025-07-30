@@ -1,5 +1,6 @@
 
 <?php
+include_once "../config/core.php";  
 include_once "../config/database.php";
 include_once "../objects/queue_config.php";
 
@@ -22,11 +23,13 @@ if (isset($_POST['department'])) {
   if ($department == "registrar") {
     $did = 4;
     $available_slot = $queue_config->getBookslot($did);
-    include_once "booking_alert.php";
     if ($available_slot >= 0) {
+      header("LOCATION:{$home_url}student/book_slot.php?did=4");
     }else{
+      include_once "booking_alert.php";
       $show_modal = true;
     }
+
   }
 
   if ($department == "mis") {
@@ -34,9 +37,10 @@ if (isset($_POST['department'])) {
     $available_slot = $queue_config->getBookslot($did);
     
     $available_slot = $queue_config->getBookslot($did);
-    include_once "booking_alert.php";
     if ($available_slot >= 0) {
+      header("LOCATION:{$home_url}student/book_slot.php?did=3");
     }else{
+      include_once "booking_alert.php";
       $show_modal = true;
     }
   }
@@ -47,7 +51,9 @@ if (isset($_POST['department'])) {
     
     include_once "booking_alert.php";
     if ($available_slot >= 0) {
+      header("LOCATION:{$home_url}student/book_slot.php?did=1");
     }else{
+      include_once "booking_alert.php";
       $show_modal = true;
     }
   }
@@ -55,10 +61,11 @@ if (isset($_POST['department'])) {
   if ($department == "admission") {
     $did = 2;
     $available_slot = $queue_config->getBookslot($did);
-    include_once "booking_alert.php";
     if ($available_slot >= 0) {
+      header("LOCATION:{$home_url}student/book_slot.php?did=2");
     }else{
-      $show_modal = true;
+      include_once "booking_alert.php";
+      $show_modal = true; 
     }
   }
 
