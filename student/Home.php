@@ -68,8 +68,6 @@ if (isset($_POST['department'])) {
       $show_modal = true; 
     }
   }
-
-  
 }
 
 ?>
