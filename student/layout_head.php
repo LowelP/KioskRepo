@@ -32,7 +32,7 @@
       <div class="flex items-center space-x-4">
         <img src="images/Logo.svg" alt="Logo" class="w-12 h-12 object-contain" />
         <h1 class="text-white text-xl sm:text-2xl font-bold">
-          Immaculada Conception College
+          Immaculada Concepcion College
         </h1>
       </div>
     </header>
