@@ -100,9 +100,9 @@ function shouldShowModal() {
 
 const totalMinutes = hours * 60 + minutes;
 
-  if (totalMinutes >= 790 && totalMinutes >= 1050) {
-     451 = 7 * 60 + 31 (7:31 AM) 
-     1050 = 17 * 60 + 30 (5:30 PM)
+  if (totalMinutes >= 451 && totalMinutes >= 1050) {
+    451 = 7 * 60 + 31 (7:31 AM) 1050
+    1050 = 17 * 60 + 30 (5:30 PM)
    return true;
   }
   // // Show modal outside blocked time
