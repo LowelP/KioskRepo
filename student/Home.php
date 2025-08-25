@@ -3,11 +3,14 @@
 include_once "../config/core.php";  
 include_once "../config/database.php";
 include_once "../objects/queue_config.php";
+include_once "../objects/department.php";
 
 $database = new Database();
 $db = $database->getConnection();
 
 $queue_config = new Queueconfig($db);
+$dpt = new Department($db);
+
 
 
 $page_title = "Deparments";
@@ -19,24 +22,21 @@ if (isset($_POST['department'])) {
   $department = $_POST['department'];
 
 
-
   if ($department == "registrar") {
     $did = 4;
-    $available_slot = $queue_config->getBookslot($did);
-    if ($available_slot >= 0) {
+    $available_slot = $dpt->getBookslot($did);
+    if ($available_slot > 0) {
       header("LOCATION:{$home_url}student/book_slot.php?did=4");
     }else{
-      include_once "booking_alert.php";
       $show_modal = true;
+      include_once "booking_alert.php";
     }
 
   }
 
   if ($department == "mis") {
     $did = 3;
-    $available_slot = $queue_config->getBookslot($did);
-    
-    $available_slot = $queue_config->getBookslot($did);
+    $available_slot = $dpt->getBookslot($did);
     if ($available_slot >= 0) {
       header("LOCATION:{$home_url}student/book_slot.php?did=3");
     }else{
@@ -47,7 +47,7 @@ if (isset($_POST['department'])) {
 
   if ($department == "cashier") {
     $did = 1;
-    $available_slot = $queue_config->getBookslot($did);
+    $available_slot = $dpt->getBookslot($did);
     
     include_once "booking_alert.php";
     if ($available_slot >= 0) {
@@ -60,7 +60,7 @@ if (isset($_POST['department'])) {
 
   if ($department == "admission") {
     $did = 2;
-    $available_slot = $queue_config->getBookslot($did);
+    $available_slot = $dpt->getBookslot($did);
     if ($available_slot >= 0) {
       header("LOCATION:{$home_url}student/book_slot.php?did=2");
     }else{
@@ -98,7 +98,7 @@ if (isset($_POST['department'])) {
 <?php
 
 
-include_once "feedback-form.php"; 
+include_once "kiosk-alert.php"; 
 include_once "layout_foot.php";
 ?>
 

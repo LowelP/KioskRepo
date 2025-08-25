@@ -67,30 +67,79 @@ if ($_POST) {
     $queue_number->queue_reservation_id = $queue_reservation_id;
 
     // Save reservation
-    if ($queue_reservation->create()) {
-        // Update queue number
-        $queue_number->UpdateQueueNumber($did);
+if ($queue_reservation->create()) {
+    // Update queue number
+    $queue_number->UpdateQueueNumber($did);
 
-        // Deduct slot
-        $departments->deductSlot($did);
+    // Deduct slot
+    $departments->deductSlot($did);
 
-        // Get new queue number
-        $actual_queNum = $queue_number->last_queue_number;
+    // Get new queue number
+    $actual_queNum = $queue_number->last_queue_number;
 
-        // Prepare session for ticket
-        include_once "../config/core.php"; // ensures session + $home_url
+    // Prepare session for ticket
+    include_once "../config/core.php"; // ensures session + $home_url
 
-        $_SESSION['ticket_number']  = $prefix . $queue_number->last_queue_number;
-        $_SESSION['reservation_id'] = $queue_reservation_id;
-        $_SESSION['department']     = $department;             // printed on ticket
-        $_SESSION['transaction']    = $posted_tx_name;         // <-- HUMAN NAME printed on ticket
-        $_SESSION['transaction_id'] = $posted_tx_id;           // keep id if you need it later
+    $_SESSION['name'] = $_POST = $_POST['full_name'];
+    $_SESSION['ticket_number']  = $prefix . $queue_number->last_queue_number;
+    $_SESSION['reservation_id'] = $queue_reservation_id;
+    $_SESSION['department']     = $department;             
+    $_SESSION['transaction']    = $posted_tx_name;         
+    $_SESSION['transaction_id'] = $posted_tx_id;           
 
-        header("LOCATION:{$home_url}student/ticket.php");
-        exit;
-    } else {
-        echo "failed";
-    }
+    // Tailwind modal markup + auto-open JS
+    ?>
+    <!-- Tailwind Confirmation Modal -->
+    <div id="confirmationModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[9999] hidden">
+      <div class="bg-white rounded-2xl shadow-lg w-full max-w-md">
+        
+        <!-- Header -->
+        <div class="flex justify-between items-center bg-blue-600 text-white px-4 py-3 rounded-t-2xl">
+          <h5 class="text-lg font-semibold">Confirm Your Details</h5>
+          <button onclick="closeModal()" class="text-white hover:text-gray-200">&times;</button>
+        </div>
+
+        <!-- Body -->
+        <div class="p-6 space-y-2 text-gray-700">
+          <p class="text-lg">Are these details correct?</p>
+          <p><strong>Name:</strong> <?php echo $_SESSION['name']; ?></p>
+          <p><strong>Ticket Number:</strong> <?php echo $_SESSION['ticket_number']; ?></p>
+          <p><strong>Department:</strong> <?php echo $_SESSION['department']; ?></p>
+          <p><strong>Transaction:</strong> <?php echo $_SESSION['transaction']; ?></p>
+        </div>
+
+        <!-- Footer -->
+        <div class="flex justify-end space-x-2 px-6 py-4 border-t">
+          <button onclick="closeModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg">
+            No
+          </button>
+          <button onclick="proceedToPrint()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+            Yes
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <script>
+      // Open modal immediately on success
+      document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("confirmationModal").classList.remove("hidden");
+      });
+
+      function closeModal() {
+        document.getElementById("confirmationModal").classList.add("hidden");
+      }
+
+      function proceedToPrint() {
+        window.location.href = "ticket.php"; // redirect to print page
+      }
+    </script>
+    <?php
+} else {
+    echo "failed";
+}
+
 }
 ?>
 

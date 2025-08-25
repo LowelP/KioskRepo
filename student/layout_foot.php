@@ -1,7 +1,7 @@
 
 </body>
 </html>  
-  
+
 <script>
     function showForm(department) {
       document.getElementById('department-form').classList.remove('hidden');
@@ -98,15 +98,19 @@ function shouldShowModal() {
   const hours = manilaTime.getHours();
   const minutes = manilaTime.getMinutes();
 
-const totalMinutes = hours * 60 + minutes;
+  const totalMinutes = hours * 60 + minutes;
 
-  if (totalMinutes >= 451 && totalMinutes >= 1050) {
-    451 = 7 * 60 + 31 (7:31 AM) 1050
-    1050 = 17 * 60 + 30 (5:30 PM)
-   return true;
+  // Define the blocked range
+  const startBlocked = 7 * 60 + 30;  // 7:31 AM
+  const endBlocked   = 17 * 60 + 30; // 5:30 PM
+
+  // Return false if within blocked time
+  if (totalMinutes >= startBlocked && totalMinutes <= endBlocked) {
+    return false;
   }
-  // // Show modal outside blocked time
-  return false;
+
+  // Show modal outside blocked time
+  return true;
 }
 
 function checkModalDisplay() {
@@ -120,11 +124,10 @@ function checkModalDisplay() {
 // Run on load
 checkModalDisplay();
 
-// Then check every minute
+// Then check every minute (60000 ms)
 setInterval(checkModalDisplay, 1000);
-
-
 </script>
+
 
 <script>
   document.getElementById("showModalBtn").addEventListener("click", function () {
@@ -139,6 +142,7 @@ document.getElementById("printBtn").addEventListener("click", function () {
   window.print();
 });
 </script>
+
 
 
 <script>
@@ -177,3 +181,4 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 </script>
+

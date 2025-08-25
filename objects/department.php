@@ -33,6 +33,29 @@ class Department{
         return false;
     }
 
+    function getBookslot($did){
+        
+        $query = "SELECT id, available_slots
+                    FROM " . $this->table_name . " 
+                    WHERE
+                    id = :did";
+        
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->BindParam(":did", $did);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+           return (int) $row['available_slots'];
+        }
+        return false;
+    }
+
+    
+
+
 }
 
 ?>
