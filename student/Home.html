@@ -41,46 +41,137 @@
     <!-- Dashboard Title -->
     <section id="dashboard-title" class="px-4 md:px-10 pt-10 mt-[-10px]"></section>
 
-    <!-- Department Buttons -->
-    <div id="department-buttons" class="grid grid-cols-1 sm:grid-cols-2 gap-6 px-4 sm:px-6 md:px-10 mt-10">
-      <div class="flex flex-col gap-4">
-        <button onclick="showForm('Registrar')" class="bg-[#071c42] text-white py-10 px-6 rounded-lg text-lg font-semibold w-full">REGISTRAR</button>
-        <button onclick="showForm('Cashier')" class="bg-[#071c42] text-white py-10 px-6 rounded-lg text-lg font-semibold w-full">CASHIER</button>
-      </div>
-      <div class="flex flex-col gap-4">
-        <button onclick="showForm('Admission')" class="bg-[#071c42] text-white py-10 px-6 rounded-lg text-lg font-semibold w-full">ADMISSION</button>
-        <button onclick="showForm('MIS')" class="bg-[#071c42] text-white py-10 px-6 rounded-lg text-lg font-semibold w-full">MIS</button>
-      </div>
+   <!-- Department Buttons -->
+<div id="department-buttons" class="grid grid-cols-1 sm:grid-cols-2 gap-6 px-4 sm:px-6 md:px-10 mt-10">
+
+  <!-- REGISTRAR -->
+  <button onclick="showForm('Registrar')" 
+    class="bg-[#071c42] text-white py-12 px-6 rounded-xl w-full flex flex-col items-center justify-center gap-4 hover:scale-[1.02] transition">
+      <img src="images/REGISTRAR.svg" class="w-12 h-12 opacity-90" alt="">
+      <span class="text-xl font-bold tracking-wide">REGISTRAR</span>
+  </button>
+
+  <!-- CASHIER -->
+  <button onclick="showForm('Cashier')" 
+    class="bg-[#071c42] text-white py-12 px-6 rounded-xl w-full flex flex-col items-center justify-center gap-4 hover:scale-[1.02] transition">
+      <img src="images/CASHIER.svg" class="w-12 h-12 opacity-90" alt="">
+      <span class="text-xl font-bold tracking-wide">CASHIER</span>
+  </button>
+
+  <!-- ADMISSION -->
+  <button onclick="showForm('Admission')" 
+    class="bg-[#071c42] text-white py-12 px-6 rounded-xl w-full flex flex-col items-center justify-center gap-4 hover:scale-[1.02] transition">
+      <img src="images/ADMISSION.svg" class="w-12 h-12 opacity-90" alt="">
+      <span class="text-xl font-bold tracking-wide">ADMISSION</span>
+  </button>
+
+  <!-- MIS -->
+  <button onclick="showForm('MIS')" 
+    class="bg-[#071c42] text-white py-12 px-6 rounded-xl w-full flex flex-col items-center justify-center gap-4 hover:scale-[1.02] transition">
+      <img src="images/MIS.svg" class="w-12 h-12 opacity-90" alt="">
+      <span class="text-xl font-bold tracking-wide">MIS</span>
+  </button>
+
+</div>
+
     </div>
 
-    <!-- Department Form -->
-    <div id="department-form" class="hidden flex justify-center items-center mt-16">
-      <div class="bg-[#ebf0f2] rounded-lg w-[1000px] p-8 space-y-6 shadow-lg">
-        <p class="text-base text-[#071c42] text-center p-6">
-          <strong>Disclaimer:</strong> Disclaimer: By using this kiosk, you agree to provide accurate information. Your queue numbers are for personal use only. Missed or skipped turns may require rebooking. All personal data is handled in compliance with the Data Privacy Act of 2012.
-        </p>
-        <div class="grid grid-cols-2 gap-6">
-          <div class="space-y-4">
-            <div id="selected-department" readonly class="w-full px-4 py-3 border border-gray-300 rounded-md text-gray-700 bg-gray-100 cursor-not-allowed"></div>
-            <input type="text" placeholder="Full Name" class="w-full px-4 py-3 border border-gray-300 rounded-md" />
-          </div>
-          <div class="space-y-4">
-            <select id="transaction-type" class="w-full px py-[15px] border border-gray-300 rounded-md">
-              <option value="">Select Transaction Type</option>
-              <option value="Enrollment">Enrollment</option>
-              <option value="Grades">Grades</option>
-              <option value="Billing">Billing</option>
-            </select>
-            <input type="text" placeholder="Student ID / LRN" class="w-full px-4 py-3 border border-gray-300 rounded-md" />
-          </div>
-        </div>
-        <div class="flex justify-center items-center pt-4">
-          <button onclick="submitForm()" class="bg-[#071c42] text-white px-[120px] py-3 rounded-lg text-sm font-semibold hover:bg-[#00284a] transition duration-300">
-            Submit
-          </button>
-        </div>
+ <!-- Department Form -->
+<div id="department-form" class="hidden flex justify-center items-center mt-16">
+  <div class="bg-white rounded-2xl w-[900px] p-10 space-y-10 shadow-lg border border-gray-200">
+
+    <!-- Disclaimer -->
+    <p class="text-base text-center text-gray-700 leading-relaxed px-4">
+      <strong>Disclaimer:</strong> By using the ICC Online Queue Registration, you agree to provide accurate 
+      information. Queue numbers are for personal use only. Three (3) consecutive no-shows may temporarily block 
+      online booking. Missed or skipped turns may require rebooking. All data is handled under the Data Privacy Act 
+      of 2012.
+    </p>
+
+    <!-- TWO COLUMN GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-10">
+
+      <!-- LEFT SIDE: DEPARTMENT -->
+      <div class="flex flex-col gap-4">
+        <input id="selected-department"
+          class="w-full px-5 py-3 rounded-lg bg-gray-100 text-gray-500 border border-gray-300 cursor-not-allowed"
+          readonly>
       </div>
+
+      <!-- RIGHT SIDE: FULL NAME + PRIORITY -->
+      <div class="flex flex-col gap-4">
+        <input type="text" id="fullname" placeholder="Full Name"
+          class="w-full px-5 py-3 border border-gray-300 rounded-lg" />
+
+        <!-- Priority checkbox under NAME (right side only) -->
+        <label class="flex items-center gap-2 text-gray-700 text-sm">
+          <input id="priority" type="checkbox" class="w-5 h-5">
+          <span id="priority-label">Priority</span>
+        </label>
+      </div>
+
     </div>
+
+    <!-- BUTTONS -->
+    <div class="flex flex-col items-center gap-4 mt-6">
+      <button onclick="submitForm()"
+        class="bg-[#071c42] text-white px-32 py-3 rounded-xl font-semibold tracking-wide hover:bg-[#041226] transition">
+        SUBMIT
+      </button>
+
+      <button onclick="location.reload()"
+        class="border border-gray-400 text-gray-700 px-32 py-3 rounded-xl font-semibold tracking-wide hover:bg-gray-100 transition">
+        CANCEL
+      </button>
+    </div>
+
+  </div>
+</div>
+<!-- CONFIRMATION MODAL -->
+<div id="confirmModal" class="fixed inset-0 bg-black bg-opacity-40 hidden z-50 flex justify-center items-center">
+  <div class="bg-white w-full max-w-md p-8 rounded-2xl shadow-xl">
+
+    <h2 class="text-center text-2xl font-bold text-[#071c42] mb-6 tracking-wide">
+      CONFIRM INFORMATION
+    </h2>
+
+    <div class="space-y-4">
+
+      <!-- Department -->
+      <input id="confirm-dept" 
+             class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300" 
+             readonly>
+
+      <!-- Name -->
+      <input id="confirm-name" 
+             class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300" 
+             readonly>
+
+      <!-- Priority or Student -->
+      <div id="confirm-type"
+           class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 font-semibold text-center">
+      </div>
+
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex flex-col items-center gap-4 mt-8">
+
+      <button id="modalConfirmBtn"
+        class="bg-[#071c42] text-white px-16 py-3 rounded-xl font-semibold w-[300px] tracking-wide hover:bg-[#041226] transition">
+        CONFIRM
+      </button>
+
+      <button id="modalCancelBtn"
+        class="bg-gray-100 border border-gray-300 text-gray-700 px-16 py-3 rounded-xl  font-semibold w-[300px] tracking-wide hover:bg-gray-200 transition">
+        CANCEL
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
   </main>
 
   <!-- Feedback Button + Modal (only shown on ticket) -->
@@ -116,17 +207,86 @@
     </div>
   </div>
 
-  <script>
+ <script>
+
+    // SHOW FORM (when selecting department)
     function showForm(department) {
       document.getElementById('department-form').classList.remove('hidden');
       document.getElementById('dashboard-title').classList.add('hidden');
       document.getElementById('department-buttons').classList.add('hidden');
-      document.getElementById('selected-department').textContent = department; 
+
+      // Show chosen department in the form
+      document.getElementById('selected-department').value = department;
+
+      // Update priority label
+      document.getElementById('priority-label').textContent =
+        department + " Priority (PWD, Pregnant, Senior Citizen)";
     }
 
+
+
+
+    /* ============================================================
+       ✔ UPDATED submitForm() YOU REQUESTED
+       ------------------------------------------------------------ */
     function submitForm() {
-      const department = document.getElementById('selected-department').textContent;
-      const transaction = document.getElementById('transaction-type').value;
+
+      const dept = document.getElementById('selected-department').value;
+      const name = document.getElementById('fullname').value;
+      const isPriority = document.getElementById('priority').checked;
+
+      if (!name.trim()) {
+        alert("Please enter your full name.");
+        return;
+      }
+
+      // Fill modal fields
+      document.getElementById('confirm-dept').value = dept;
+      document.getElementById('confirm-name').value = name;
+
+      // STUDENT or PRIORITY selection
+      let typeBox = document.getElementById('confirm-type');
+
+      if (isPriority) {
+        typeBox.textContent = "PRIORITY";
+        typeBox.classList.remove("text-gray-800");
+        typeBox.classList.add("text-green-600");
+      } else {
+        typeBox.textContent = "STUDENT";
+        typeBox.classList.remove("text-green-600");
+        typeBox.classList.add("text-gray-800");
+      }
+
+      // Show confirm modal
+      document.getElementById('confirmModal').classList.remove('hidden');
+    }
+
+
+
+
+    /* ============================================================
+       ✔ CONFIRM & CANCEL MODAL BUTTONS
+       ------------------------------------------------------------ */
+    document.getElementById('modalConfirmBtn').onclick = function () {
+      document.getElementById('confirmModal').classList.add('hidden');
+      generateTicket(); // Generate ticket after confirmation
+    };
+
+    document.getElementById('modalCancelBtn').onclick = function () {
+      document.getElementById('confirmModal').classList.add('hidden');
+    };
+
+
+
+
+    /* ============================================================
+       ✔ TICKET GENERATION FUNCTION
+       ------------------------------------------------------------ */
+    function generateTicket() {
+      const department = document.getElementById('selected-department').value;
+      const name = document.getElementById('fullname').value;
+      const isPriority = document.getElementById('priority').checked;
+
       const now = new Date();
       const formattedDateTime = now.toLocaleString('en-US', {
         dateStyle: 'full',
@@ -149,8 +309,9 @@
             <h2 class="text-xl font-bold text-[#07214A]">Immaculada Conception College of Soldier Hills Inc.</h2>
             <p class="text-lg text-gray-700">Your ticket number is</p>
             <div class="text-5xl font-extrabold text-[#F0BB3F]">${ticketNumber}</div>
-            <div class="text-md font-semibold text-gray-800">Department: <span class="text-[#07214A]">${department}</span></div>
-            <div class="text-md font-semibold text-gray-800">Transaction Type: <span class="text-[#07214A]">${transaction}</span></div>
+            <div class="text-md font-semibold text-gray-800">
+              Department: <span class="text-[#07214A]">${department}</span>
+            </div>
             <p class="text-gray-600">There are <strong>${queueBefore}</strong> queuing before you</p>
             <div class="pt-4 border-t border-gray-300">
               <div class="font-bold text-[#07214A]">QUEUE# GENERATED</div>
@@ -159,11 +320,17 @@
           </div>
         </div>
       `;
+
       document.querySelector('main').innerHTML = ticketHTML;
       document.getElementById('ticket-feedback').classList.remove('hidden');
     }
 
-    // Feedback Modal Logic
+
+
+
+    /* ============================================================
+       ✔ FEEDBACK MODAL LOGIC
+       ------------------------------------------------------------ */
     const feedbackBtn = document.getElementById('feedbackBtn');
     const feedbackModal = document.getElementById('feedbackModal');
     const submitFeedbackBtn = document.getElementById('submitFeedbackBtn');
@@ -182,24 +349,7 @@
       });
     }
 
-    const stars = document.querySelectorAll('#starRating .star');
-    let currentRating = 0;
-    stars.forEach((star, index) => {
-      star.addEventListener('click', () => {
-        currentRating = index + 1;
-        stars.forEach((s, i) => {
-          s.classList.toggle('text-yellow-400', i < currentRating);
-          s.classList.toggle('text-gray-300', i >= currentRating);
-        });
-      });
-    });
+</script>
 
-    if (submitFeedbackBtn) {
-      submitFeedbackBtn.addEventListener('click', () => {
-        alert('Thanks for your feedback!');
-        feedbackModal.classList.add('hidden');
-      });
-    }
-  </script>
 </body>
 </html>
