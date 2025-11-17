@@ -7,35 +7,39 @@
  <title>
    Online Queuing Management System
   </title>
-  <script src="https://cdn.tailwindcss.com">
-</script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
    body {
       font-family: "Inter", sans-serif;
     }
   </style>
  </head>
+
 <body class="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed flex flex-col justify-between p-4 sm:p-6 relative" style="background-image: url('images/background.png');">
 
-  <!-- Top-right Logo -->
-  <div class="absolute top-[50px] right-[185px] sm:top-[50px] sm:right-[185px] md:top-[50px] md:right-[185px]">
-    <img src="images/Logo.svg" alt="Logo" class="w-[135px] h-[135px] sm:w-[135px] sm:h-[135px] md:w-[135px] md:h-[135px] object-contain">
-  </div>
+ <!-- Top-left Logo (Aligned with Text) -->
+<div class="absolute top-[50px] left-[48px] md:left-[48px] sm:left-[32px]">
+  <img src="images/Logo.svg" alt="Logo" class="w-[135px] h-[135px] object-contain">
+</div>
 
-  <!-- Left-aligned Title (vertical center) -->
-  <div class="flex-1 flex items-center px-4 sm:px-6 md:px-12 mb-[-100px]">
+
+  <!-- Left-aligned Title + Left-aligned Button -->
+  <div class="flex-1 flex flex-col justify-center px-4 sm:px-6 md:px-12 mb-[-100px]">
+    
+    <!-- Title -->
     <h1 class="text-white text-[28px] sm:text-[36px] md:text-[45px] font-bold leading-snug sm:leading-tight max-w-[90%] md:max-w-[600px] text-left">
       <span>ONLINE QUEUING </span>
       <span class="text-[#F0BB3F]">MANAGEMENT SYSTEM</span>
     </h1>
-  </div>
 
-  <!-- Bottom-centered Start Button -->
-  <div class="w-full flex justify-center mb-[150px]">
-    <a href="Home.html" class="bg-[#07214A] text-white font-bold py-3 px-10 rounded-lg hover:bg-[#061835] transition text-base sm:text-lg shadow-lg text-center">
-  Start
-</a>
+    <!-- Start Button (Fixed: no more full width) -->
+    <div class="mt-8">
+      <a href="Home.html" class="inline-block bg-[#07214A] text-white font-bold py-8 px-[100px] ml-[120px] rounded-lg hover:bg-[#061835] transition text-xl sm:text-xl shadow-lg mt-10">
+        START
+      </a>
+    </div>
+
   </div>
 
 </body>

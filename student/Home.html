@@ -43,40 +43,58 @@
     <!-- Dashboard Title -->
     <section id="dashboard-title" class="px-4 md:px-10 pt-10 mt-[-10px]"></section>
 
-   <!-- Department Buttons -->
-<div id="department-buttons" class="grid grid-cols-1 sm:grid-cols-2 gap-6 px-4 sm:px-6 md:px-10 mt-10">
 
-  <!-- REGISTRAR -->
-  <button onclick="showForm('Registrar')" 
-    class="bg-[#071c42] text-white py-12 px-6 rounded-xl w-full flex flex-col items-center justify-center gap-4 hover:scale-[1.02] transition">
-      <img src="images/REGISTRAR.svg" class="w-12 h-12 opacity-90" alt="">
-      <span class="text-xl font-bold tracking-wide">REGISTRAR</span>
-  </button>
+<!-- Department Buttons -->
+<div id="department-buttons" class="px-4 sm:px-6 md:px-10 mt-10">
 
-  <!-- CASHIER -->
-  <button onclick="showForm('Cashier')" 
-    class="bg-[#071c42] text-white py-12 px-6 rounded-xl w-full flex flex-col items-center justify-center gap-4 hover:scale-[1.02] transition">
-      <img src="images/CASHIER.svg" class="w-12 h-12 opacity-90" alt="">
-      <span class="text-xl font-bold tracking-wide">CASHIER</span>
-  </button>
+  <!-- Instruction (ONLY visible in Department Buttons) -->
+  <div class="w-full text-center mb-6">
+    <h2 class="text-xl sm:text-2xl font-bold text-[#071c42] tracking-wide">
+      PLEASE SELECT A DEPARTMENT TO PROCEED
+    </h2>
+    <p class="text-gray-600 mt-1 text-sm sm:text-base">
+      Tap on the department you want to visit
+    </p>
+  </div>
 
-  <!-- ADMISSION -->
-  <button onclick="showForm('Admission')" 
-    class="bg-[#071c42] text-white py-12 px-6 rounded-xl w-full flex flex-col items-center justify-center gap-4 hover:scale-[1.02] transition">
-      <img src="images/ADMISSION.svg" class="w-12 h-12 opacity-90" alt="">
-      <span class="text-xl font-bold tracking-wide">ADMISSION</span>
-  </button>
+  <!-- BUTTON GRID -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
-  <!-- MIS -->
-  <button onclick="showForm('MIS')" 
-    class="bg-[#071c42] text-white py-12 px-6 rounded-xl w-full flex flex-col items-center justify-center gap-4 hover:scale-[1.02] transition">
-      <img src="images/MIS.svg" class="w-12 h-12 opacity-90" alt="">
-      <span class="text-xl font-bold tracking-wide">MIS</span>
-  </button>
+    <!-- REGISTRAR -->
+    <button onclick="showForm('Registrar')" 
+      class="bg-[#071c42] text-white py-12 px-6 rounded-xl w-full flex flex-col items-center 
+      justify-center gap-4 hover:scale-[1.02] transition">
+        <img src="images/REGISTRAR.svg" class="w-12 h-12 opacity-90" alt="">
+        <span class="text-xl font-bold tracking-wide">REGISTRAR</span>
+    </button>
 
+    <!-- CASHIER -->
+    <button onclick="showForm('Cashier')" 
+      class="bg-[#071c42] text-white py-12 px-6 rounded-xl w-full flex flex-col items-center 
+      justify-center gap-4 hover:scale-[1.02] transition">
+        <img src="images/CASHIER.svg" class="w-12 h-12 opacity-90" alt="">
+        <span class="text-xl font-bold tracking-wide">CASHIER</span>
+    </button>
+
+    <!-- ADMISSION -->
+    <button onclick="showForm('Admission')" 
+      class="bg-[#071c42] text-white py-12 px-6 rounded-xl w-full flex flex-col items-center 
+      justify-center gap-4 hover:scale-[1.02] transition">
+        <img src="images/ADMISSION.svg" class="w-12 h-12 opacity-90" alt="">
+        <span class="text-xl font-bold tracking-wide">ADMISSION</span>
+    </button>
+
+    <!-- MIS -->
+    <button onclick="showForm('MIS')" 
+      class="bg-[#071c42] text-white py-12 px-6 rounded-xl w-full flex flex-col items-center 
+      justify-center gap-4 hover:scale-[1.02] transition">
+        <img src="images/MIS.svg" class="w-12 h-12 opacity-90" alt="">
+        <span class="text-xl font-bold tracking-wide">MIS</span>
+    </button>
+
+  </div>
 </div>
 
-    </div>
 
  <!-- Department Form -->
 <div id="department-form" class="hidden flex justify-center items-center mt-16">
@@ -91,34 +109,81 @@
     </p>
 
     <!-- TWO COLUMN GRID -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-10">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-10">
 
-      <!-- LEFT SIDE: DEPARTMENT -->
-      <div class="flex flex-col gap-4">
-        <input id="selected-department"
-          class="w-full px-5 py-3 rounded-lg bg-gray-100 text-gray-500 border border-gray-300 cursor-not-allowed"
-          readonly>
-      </div>
+  <!-- LEFT COLUMN -->
+  <div class="flex flex-col gap-4">
 
-      <!-- RIGHT SIDE: FULL NAME + PRIORITY -->
-      <div class="flex flex-col gap-4">
-        <input type="text" id="fullname" placeholder="Full Name"
-          class="w-full px-5 py-3 border border-gray-300 rounded-lg" />
+    <!-- Department -->
+    <input id="selected-department"
+      class="w-full px-5 py-3 rounded-lg bg-gray-100 text-gray-500 border border-gray-300 cursor-not-allowed"
+      readonly>
 
-        <!-- Priority checkbox under NAME (right side only) -->
-        <label class="flex items-center gap-2 text-gray-700 text-sm">
-          <input id="priority" type="checkbox" class="w-5 h-5">
-          <span id="priority-label">Priority</span>
-        </label>
-      </div>
+  <div class="relative">
+  <select id="program"
+    class="w-full px-5 py-3 border border-gray-300 rounded-lg bg-white 
+           text-gray-700 appearance-none">
+    <option value="">Select Program / Course</option>
+    <option>Bachelor of Science Computer Science</option>
+    <option>Bachelor of Secondary Education</option>
+    <option>Bachelor of Elementary Education</option>
+    <option>Bachelor of Science in Business Administration</option>
+  </select>
 
-    </div>
+  <!-- REAL ARROW ICON -->
+  <svg class="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500"
+       fill="currentColor" viewBox="0 0 20 20">
+      <path d="M5.25 7.5L10 12.25L14.75 7.5H5.25Z" />
+  </svg>
+</div>
+
+    <!-- Student ID / LRN -->
+    <input type="text" id="studentid" placeholder=" Student ID / LRN"
+      class="w-full px-5 py-3 border border-gray-300 rounded-lg">
+
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="flex flex-col gap-4">
+
+    <!-- Full Name -->
+    <input type="text" id="fullname" placeholder=" Surname, Given Name M.I"
+      class="w-full px-5 py-3 border border-gray-300 rounded-lg" />
+
+      <div class="relative">
+  <select id="yearlevel"
+    class="w-full px-5 py-3 border border-gray-300 rounded-lg bg-white 
+           text-gray-700 appearance-none">
+    <option value="">Select Year Level</option>
+    <option>1st Year</option>
+    <option>2nd Year</option>
+    <option>3rd Year</option>
+    <option>4th Year</option>
+  </select>
+
+  <!-- REAL ARROW ICON -->
+  <svg class="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500"
+       fill="currentColor" viewBox="0 0 20 20">
+      <path d="M5.25 7.5L10 12.25L14.75 7.5H5.25Z" />
+  </svg>
+</div>
+
+    <!-- Priority checkbox -->
+    <label class="flex items-center gap-2 text-gray-700 text-sm">
+      <input id="priority" type="checkbox" class="w-5 h-5">
+      <span id="priority-label">Priority</span>
+    </label>
+
+  </div>
+
+</div>
+
 
     <!-- BUTTONS -->
     <div class="flex flex-col items-center gap-4 mt-6">
       <button onclick="submitForm()"
-        class="bg-[#071c42] text-white px-32 py-3 rounded-xl font-semibold tracking-wide hover:bg-[#041226] transition">
-        SUBMIT
+        class="bg-[#071c42] text-white px-[140PX] py-3 rounded-xl font-semibold tracking-wide hover:bg-[#041226] transition">
+        PRINT 
       </button>
 
       <button onclick="location.reload()"
@@ -148,6 +213,20 @@
       <input id="confirm-name" 
              class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300" 
              readonly>
+             <!-- Program/Course -->
+<input id="confirm-program"
+       class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300"
+       readonly>
+
+<!-- Year Level -->
+<input id="confirm-year"
+       class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300"
+       readonly>
+
+<!-- Student ID / LRN -->
+<input id="confirm-studentid"
+       class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300"
+       readonly>
 
       <!-- Priority or Student -->
       <div id="confirm-type"
@@ -202,9 +281,6 @@
           </div>
           <textarea rows="4" placeholder="Comments" class="w-full px-4 py-3 border border-gray-300 rounded-md resize-none"></textarea>
         </div>
-        <div class="flex justify-end px-6 py-4">
-          <button id="submitFeedbackBtn" class="bg-[#07214A] text-white px-6 py-2 rounded-md hover:bg-[#061835] transition">Submit Feedback</button>
-        </div>
       </div>
     </div>
   </div>
@@ -245,6 +321,10 @@
       // Fill modal fields
       document.getElementById('confirm-dept').value = dept;
       document.getElementById('confirm-name').value = name;
+      document.getElementById('confirm-program').value = document.getElementById('program').value;
+document.getElementById('confirm-year').value = document.getElementById('yearlevel').value;
+document.getElementById('confirm-studentid').value = document.getElementById('studentid').value;
+
 
       // STUDENT or PRIORITY selection
       let typeBox = document.getElementById('confirm-type');
@@ -269,14 +349,14 @@
     /* ============================================================
        ✔ CONFIRM & CANCEL MODAL BUTTONS
        ------------------------------------------------------------ */
-    document.getElementById('modalConfirmBtn').onclick = function () {
-      document.getElementById('confirmModal').classList.add('hidden');
-      generateTicket(); // Generate ticket after confirmation
-    };
+   document.getElementById('modalConfirmBtn').onclick = function () {
+  document.getElementById('confirmModal').classList.add('hidden');
+  generateTicket(); 
 
-    document.getElementById('modalCancelBtn').onclick = function () {
-      document.getElementById('confirmModal').classList.add('hidden');
-    };
+  // CLEAR NAME + PRIORITY AFTER SUBMIT
+  document.getElementById('fullname').value = "";
+  document.getElementById('priority').checked = false;
+};
 
 
 
@@ -285,47 +365,81 @@
        ✔ TICKET GENERATION FUNCTION
        ------------------------------------------------------------ */
     function generateTicket() {
-      const department = document.getElementById('selected-department').value;
-      const name = document.getElementById('fullname').value;
-      const isPriority = document.getElementById('priority').checked;
+  const department = document.getElementById('selected-department').value;
+  const name = document.getElementById('fullname').value;
+  const isPriority = document.getElementById('priority').checked;
 
-      const now = new Date();
-      const formattedDateTime = now.toLocaleString('en-US', {
-        dateStyle: 'full',
-        timeStyle: 'short',
-      });
+  const now = new Date();
+  const formattedDateTime = now.toLocaleString('en-US', {
+    dateStyle: 'full',
+    timeStyle: 'short',
+  });
 
-      const ticketNumber = 'A' + Math.floor(100 + Math.random() * 900);
-      const queueBefore = 2;
+  const ticketNumber = 'A' + Math.floor(100 + Math.random() * 900);
+  const queueBefore = 2;
 
-      const ticketHTML = `
-        <header class="w-full bg-[#07214A] px-6 py-4 shadow-md border-b-4 border-[#F0BB3F]">
-          <div class="flex items-center space-x-4">
-            <img src="images/Logo.svg" alt="Logo" class="w-12 h-12 object-contain" />
-            <h1 class="text-white text-xl sm:text-2xl font-bold">Immaculada Conception College</h1>
-          </div>
-        </header>
-        <div class="flex justify-center items-center min-h-[calc(100vh-100px)] px-4 py-10">
-          <div class="bg-white rounded-lg shadow-xl p-8 max-w-xl w-full text-center space-y-6 border border-gray-300">
-            <img src="images/Logo.svg" alt="Logo" class="w-20 h-20 mx-auto">
-            <h2 class="text-xl font-bold text-[#07214A]">Immaculada Conception College of Soldier Hills Inc.</h2>
-            <p class="text-lg text-gray-700">Your ticket number is</p>
-            <div class="text-5xl font-extrabold text-[#F0BB3F]">${ticketNumber}</div>
-            <div class="text-md font-semibold text-gray-800">
-              Department: <span class="text-[#07214A]">${department}</span>
-            </div>
-            <p class="text-gray-600">There are <strong>${queueBefore}</strong> queuing before you</p>
-            <div class="pt-4 border-t border-gray-300">
-              <div class="font-bold text-[#07214A]">QUEUE# GENERATED</div>
-              <div class="text-sm text-gray-500">${formattedDateTime}</div>
-            </div>
-          </div>
+  const ticketHTML = `
+    <header class="w-full bg-[#07214A] px-6 py-4 shadow-md border-b-4 border-[#F0BB3F]">
+      <div class="flex items-center space-x-4">
+        <img src="images/Logo.svg" alt="Logo" class="w-12 h-12 object-contain" />
+        <h1 class="text-white text-xl sm:text-2xl font-bold">Immaculada Conception College</h1>
+      </div>
+    </header>
+
+    <div class="flex justify-center items-center min-h-[calc(100vh-100px)] px-4 py-10">
+      <div class="bg-white rounded-lg shadow-xl p-8 max-w-xl w-full text-center space-y-6 border border-gray-300">
+        
+        <img src="images/Logo.svg" alt="Logo" class="w-20 h-20 mx-auto">
+        <h2 class="text-xl font-bold text-[#07214A]">Immaculada Conception College of Soldier Hills Inc.</h2>
+
+        <p class="text-lg text-gray-700">Your ticket number is</p>
+        <div class="text-5xl font-extrabold text-[#F0BB3F]">${ticketNumber}</div>
+
+        <div class="text-md font-semibold text-gray-800">
+          Department: <span class="text-[#07214A]">${department}</span>
         </div>
-      `;
+        <div class="text-md font-semibold text-gray-800">
+  Program/Course: <span class="text-[#07214A]">${document.getElementById("program").value}</span>
+</div>
 
-      document.querySelector('main').innerHTML = ticketHTML;
-      document.getElementById('ticket-feedback').classList.remove('hidden');
+<div class="text-md font-semibold text-gray-800">
+  Year Level: <span class="text-[#07214A]">${document.getElementById("yearlevel").value}</span>
+</div>
+
+<div class="text-md font-semibold text-gray-800">
+  Student ID / LRN: <span class="text-[#07214A]">${document.getElementById("studentid").value}</span>
+</div>
+
+
+        <p class="text-gray-600">There are <strong>${queueBefore}</strong> queuing before you</p>
+
+        <div class="pt-4 border-t border-gray-300">
+          <div class="font-bold text-[#07214A]">QUEUE# GENERATED</div>
+          <div class="text-sm text-gray-500">${formattedDateTime}</div>
+        </div>
+
+        <div class="text-center text-gray-700 text-sm mt-4">
+          Returning to start in <span id="countdown">5</span> seconds...
+        </div>
+
+      </div>
+    </div>
+  `;
+
+  document.querySelector('main').innerHTML = ticketHTML;
+
+  // Start countdown
+  let timeLeft = 5;
+  const timer = setInterval(() => {
+    timeLeft--;
+    document.getElementById("countdown").textContent = timeLeft;
+
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      window.location.href = "index.html";
     }
+  }, 1000);
+}
 
 
 
@@ -350,6 +464,20 @@
         }
       });
     }
+// AUTO-CAPITALIZE FULL NAME
+document.getElementById("fullname").addEventListener("input", function () {
+  this.value = this.value.toUpperCase();
+});
+// AUTO-CAPITALIZE OTHER FIELDS
+document.getElementById('confirm-program').value =
+  document.getElementById('program').value;
+
+document.getElementById('confirm-year').value =
+  document.getElementById('yearlevel').value;
+
+document.getElementById("studentid").addEventListener("input", function () {
+  this.value = this.value.toUpperCase();
+});
 
 </script>
 
